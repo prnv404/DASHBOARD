@@ -47,7 +47,7 @@ export default function Dashboard() {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [operatorName, setOperatorName] = useState("");
   const router = useRouter();
-  const baseUrl = "https://prod-.bus3.in/api/v1-beta";
+  const baseUrl = "https://prod-api.bus3.in/api/v1-beta";
 
   useEffect(() => {
     if (typeof window !== "undefined") {
