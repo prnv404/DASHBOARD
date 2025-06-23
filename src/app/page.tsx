@@ -356,6 +356,24 @@ export default function Dashboard() {
                   </div>
                 </div>
               </TabsContent>
+              <TabsContent value="yesterday">
+                <div className="flex flex-col items-center justify-center text-center bg-white text-slate-900 rounded-xl border border-gray-200 p-8">
+                  <Rocket className="mb-4 h-16 w-16 text-green-600" />
+                  <h2 className="text-2xl font-semibold">Coming Soon!</h2>
+                  <p className="mt-2 text-muted-foreground">
+                    We&apos;re working hard to bring you something amazing.
+                  </p>
+                </div>
+              </TabsContent>
+              <TabsContent value="custom">
+                <div className="flex flex-col items-center justify-center text-center bg-white text-slate-900 rounded-xl border border-gray-200 p-8">
+                  <Rocket className="mb-4 h-16 w-16 text-green-600" />
+                  <h2 className="text-2xl font-semibold">Coming Soon!</h2>
+                  <p className="mt-2 text-muted-foreground">
+                    We&apos;re working hard to bring you something amazing.
+                  </p>
+                </div>
+              </TabsContent>
             </Tabs>
           ) : (
             <div className="flex flex-col items-center justify-center text-center bg-white text-slate-900 rounded-xl border border-gray-200 p-8">
