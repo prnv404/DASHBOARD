@@ -11,7 +11,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [busIds, setBusIds] = useState<number[]>([]);
   const router = useRouter();
-  const baseUrl = "https://api.bus3.in/api/v1-beta";
+  const baseUrl = "https://prod-api.bus3.in/api/v1-beta";
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();

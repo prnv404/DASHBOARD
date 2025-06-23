@@ -47,7 +47,7 @@ export default function Dashboard() {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [operatorName, setOperatorName] = useState("");
   const router = useRouter();
-  const baseUrl = "https://api.bus3.in/api/v1-beta";
+  const baseUrl = "https://prod-.bus3.in/api/v1-beta";
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -173,20 +173,20 @@ export default function Dashboard() {
   return (
     <div className="flex min-h-screen w-full flex-col bg-white text-slate-900">
       <div className="flex flex-col sm:gap-4 sm:py-4">
-        <header className="sticky top-0 z-30 flex items-center justify-between border-b border-gray-200 bg-white px-4 py-4 sm:static sm:h-auto sm:border-0 sm:bg-white sm:px-6">
+        <header className="sticky top-0 z-30 flex items-center justify-between border-b border-gray-200 bg-black px-4 py-4 sm:static sm:h-auto sm:border-0 sm:bg-black sm:px-6">
           <div>
-            <h1 className="text-3xl font-bold">BUS3</h1>
+            <h1 className="text-3xl font-bold text-white">BUS3</h1>
           </div>
           <button
-            className="ml-2 p-2 rounded-lg hover:bg-gray-100"
+            className="ml-2 p-2 rounded-lg hover:bg-gray-800"
             onClick={() => setShowMenu(true)}
             aria-label="Open menu"
           >
-            <Menu className="h-6 w-6" />
+            <Menu className="h-6 w-6 text-white" />
           </button>
         </header>
         <div className="w-full mt-2 mb-2">
-          <span className="text-base font-bold ml-4">{operatorName || ""}</span>
+          <span className="text-lg font-extrabold tracking-wide ml-4 text-black" style={{ fontFamily: 'Inter, Montserrat, Arial, sans-serif' }}>{operatorName || ""}</span>
         </div>
         <main
           className={`grid flex-1 gap-4 p-4 pb-20 sm:px-6 sm:py-0 md:gap-8 items-start bg-white`}
