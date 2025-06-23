@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import {
   Activity,
@@ -48,6 +48,10 @@ export default function Dashboard() {
   const [operatorName, setOperatorName] = useState("");
   const router = useRouter();
   const baseUrl = "https://prod-api.bus3.in/api/v1-beta";
+  const [tcFlash, setTcFlash] = useState(false);
+  const [ttFlash, setTtFlash] = useState(false);
+  const prevTotalCollection = useRef(totalCollection);
+  const prevTotalTickets = useRef(totalTickets);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -168,6 +172,22 @@ export default function Dashboard() {
     // eslint-disable-next-line
   }, [refreshKey, loginChecked]);
 
+  useEffect(() => {
+    if (prevTotalCollection.current !== totalCollection) {
+      setTcFlash(true);
+      setTimeout(() => setTcFlash(false), 600);
+      prevTotalCollection.current = totalCollection;
+    }
+  }, [totalCollection]);
+
+  useEffect(() => {
+    if (prevTotalTickets.current !== totalTickets) {
+      setTtFlash(true);
+      setTimeout(() => setTtFlash(false), 600);
+      prevTotalTickets.current = totalTickets;
+    }
+  }, [totalTickets]);
+
   const difference = totalCollection - yesterdayRevenue;
 
   return (
@@ -221,7 +241,7 @@ export default function Dashboard() {
                           <p className="text-xs font-medium uppercase text-muted-foreground text-center">
                             Total Collection
                           </p>
-                          <p className="text-2xl font-bold text-center">
+                          <p className={`text-2xl font-bold text-center transition-all duration-500 ${tcFlash ? 'animate-pulse text-green-600' : ''}`}> 
                             {loadingMetrics ? <span className="text-base">Loading...</span> : <AnimatedCounter key={`tc-${refreshKey}`} value={totalCollection} prefix="₹" />}
                           </p>
                         </div>
@@ -229,7 +249,7 @@ export default function Dashboard() {
                           <p className="text-xs font-medium uppercase text-muted-foreground text-center">
                             Total Tickets
                           </p>
-                          <p className="text-2xl font-bold text-center">
+                          <p className={`text-2xl font-bold text-center transition-all duration-500 ${ttFlash ? 'bg-green-100 ring-2 ring-green-400 rounded' : ''}`}> 
                             {loadingMetrics ? <span className="text-base">Loading...</span> : <AnimatedCounter key={`tt-${refreshKey}`} value={totalTickets} />}
                           </p>
                         </div>
@@ -294,11 +314,7 @@ export default function Dashboard() {
 
                 <div className="mt-6">
                   <h3 className="flex items-center gap-2 text-base font-semibold mb-2">
-                    <span className="relative flex h-3 w-3">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                    </span>
-                    <span>{busReports.length} Bus Running</span>
+                    <span>Report</span>
                   </h3>
                   <div className="mt-2 space-y-3">
                     {loadingMetrics ? (
@@ -315,7 +331,13 @@ export default function Dashboard() {
                               <Bus className="h-6 w-6 text-primary" />
                             </div>
                             <div className="flex-1">
-                              <p className="font-semibold text-base">{bus.busName} <span className="text-xs text-muted-foreground">({bus.regNo})</span></p>
+                              <p className="font-semibold text-base flex items-center justify-between">
+                                <span>{bus.busName} <span className="text-xs text-muted-foreground">({bus.regNo})</span></span>
+                                <span className="relative flex h-3 w-3 ml-2">
+                                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                  <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                                </span>
+                              </p>
                               <p className="text-xs text-muted-foreground">₹{bus.totalCollection} &bull; {bus.totalTickets} tickets</p>
                             </div>
                           </div>
