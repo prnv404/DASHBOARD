@@ -131,6 +131,7 @@ export default function Dashboard() {
           const shiftData = await shiftRes.json();
           let upi = 0, card = 0, busName = "", regNo = "";
           let tripDetails: any[] = [];
+          let bata = undefined;
           if (shiftData.success && shiftData.data) {
             upi = Number(shiftData.data.upi) || 0;
             card = Number(shiftData.data.card) || 0;
@@ -139,6 +140,7 @@ export default function Dashboard() {
             upiSum += upi;
             cardSum += card;
             tripDetails = Array.isArray(shiftData.data.tripDetails) ? shiftData.data.tripDetails : [];
+            bata = typeof shiftData.data.bata !== 'undefined' ? Number(shiftData.data.bata) : undefined;
           }
           const cash = busTotalRevenue - (upi + card);
           reports.push({
@@ -152,6 +154,7 @@ export default function Dashboard() {
             card,
             cash,
             tripDetails,
+            bata,
           });
         }
         setTotalCollection(totalRevenueSum);
@@ -345,6 +348,9 @@ export default function Dashboard() {
                             <span>Cash: <span className="text-yellow-700 font-bold">₹{bus.cash}</span></span>
                             <span>UPI: <span className="text-green-700 font-bold">₹{bus.upi}</span></span>
                             <span>Card: <span className="text-blue-700 font-bold">₹{bus.card}</span></span>
+                            {typeof bus.bata !== 'undefined' && (
+                              <span>Bata: <span className="text-green-700 font-bold">₹{bus.bata}</span></span>
+                            )}
                           </div>
                           {expandedBus === bus.id && bus.tripDetails && bus.tripDetails.length > 0 && (
                             <div className="mt-3 overflow-x-auto bg-white border border-gray-200 rounded-lg p-2 transition-colors duration-200">
